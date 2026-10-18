@@ -36,16 +36,21 @@ footer{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;color:
 .motionbtn{border:1px solid #61414b;background:#211820;color:#e5bac0;font:11px monospace;letter-spacing:1px;padding:9px 14px;cursor:pointer}
 .motionbtn:focus{outline:2px solid #ffc6cc;outline-offset:2px}
 @media(prefers-reduced-motion:reduce){.matrix i{animation:none!important}}
+.action:focus,.motionbtn:focus,.diagbtn:focus{outline:2px solid #ffbec6!important;outline-offset:3px;box-shadow:0 0 18px #b8294680}
+.diagnostics{border:1px solid #392932;background:#111017;margin-top:12px;padding:12px 16px;font:12px monospace;color:#cbb3b7}
+.diagbtn{border:1px solid #61414b;background:#211820;color:#e6c0c5;padding:8px 12px;cursor:pointer;font:11px monospace}
+.diaghead{display:flex;align-items:center;justify-content:space-between;gap:10px}.log{white-space:pre-wrap;line-height:1.6;max-height:120px;overflow:auto;margin:12px 0 0;color:#b8a2a6}
 </style></head>
 <body><main class="shell">
-<header class="top"><div class="brand"><div class="sigil" aria-hidden="true"></div><div><strong>CORTEX HOST</strong><small>PLAYSTATION / EXPLOIT ENVIRONMENT</small></div></div><div class="topright"><span class="lamp"></span>LOCAL INTERFACE <span style="color:#685860">/</span> BUILD 002</div></header>
+<header class="top"><div class="brand"><div class="sigil" aria-hidden="true"></div><div><strong>CORTEX HOST</strong><small>PLAYSTATION / EXPLOIT ENVIRONMENT</small></div></div><div class="topright"><span class="lamp"></span>LOCAL INTERFACE <span style="color:#685860">/</span> BUILD 003</div></header>
 <section class="hero"><div class="intro"><div class="kicker">THE SYSTEM AWAITS YOUR COMMAND</div><h1>AWAKEN<br><span>THE CORE.</span></h1><p>A standalone PlayStation browser host. A dark console interface inspired by CORTEX OS, with upstream PSFree-Lapse preserved intact.</p><div class="divider"></div><div class="meta">TARGET / PS4 9.00 &nbsp; • &nbsp; ENGINE / PSFREE + LAPSE</div></div><div class="orbit" aria-hidden="true"><div class="matrix"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="ring r1"></div><div class="ring r2"></div><div class="ring r3"></div><div class="core"></div><span class="orb o1"></span><span class="orb o2"></span><span class="orb o3"></span></div></section>
 <div class="motionbar"><button class="motionbtn" type="button" id="motion" aria-pressed="true">MOTION: LOW</button></div><section class="panelgrid" aria-label="Launcher controls">
 <article class="panel"><div class="micro">01 // EXPLOIT ENGINE</div><h2>INITIALIZE SYSTEM</h2><p>Open the original PSFree-Lapse exploit entrypoint. Execution begins on that page; this interface does not claim success in advance.</p><a class="action" href="./index.html" id="launch">ENTER EXPLOIT →</a></article>
-<article class="panel"><div class="micro">02 // GOLDHEN</div><h2>PAYLOAD STATUS</h2><p>GoldHEN payload delivery is not integrated in Build 002. A compatible payload must be supplied separately.</p><span class="micro">NOT CONFIGURED</span></article>
+<article class="panel"><div class="micro">02 // GOLDHEN</div><h2>PAYLOAD STATUS</h2><p>GoldHEN payload delivery is not integrated in Build 003. A compatible payload must be supplied separately.</p><span class="micro">NOT CONFIGURED</span></article>
 <article class="panel"><div class="micro">03 // ARCHIVES</div><h2>SYSTEM NOTES</h2><p>Inspect project documentation, upstream licenses, and compatibility guidance before running the exploit.</p><a class="action secondary" href="./about.html">OPEN CREDITS →</a></article>
 </section>
-<section class="stats" aria-label="Status readings"><div class="stat"><label>CONSOLE</label><b id="consoleType">DETECTING</b></div><div class="stat"><label>FIRMWARE</label><b id="firmware">DETECTING</b></div><div class="stat"><label>HOST MODE</label><b>LOCAL WEB</b></div><div class="stat"><label>ENGINE STATE</label><b>NOT STARTED</b></div></section>
+<section class="stats" aria-label="Status readings"><div class="stat"><label>CONSOLE</label><b id="consoleType">DETECTING</b></div><div class="stat"><label>FIRMWARE</label><b id="firmware">DETECTING</b></div><div class="stat"><label>HOST MODE</label><b>LOCAL WEB</b></div><div class="stat"><label>ENGINE STATE</label><b id="engineState">NOT STARTED</b></div></section>
+<section class="diagnostics"><div class="diaghead"><span>DIAGNOSTIC / LOCAL EVENTS ONLY</span><button class="diagbtn" id="togglelog" type="button" aria-expanded="false">SHOW LOG</button></div><pre class="log" id="log" hidden></pre></section>
 <footer><span>© CORTEX HOST UI // DERIVED FROM PSFREE-LAPSE (AGPL-3.0-OR-LATER)</span><span>ARROWS / NAVIGATE &nbsp; • &nbsp; ENTER / SELECT &nbsp; • &nbsp; <a href="https://github.com/Al-Azif/psfree-lapse">UPSTREAM SOURCE</a></span></footer>
 </main>
 <script>
@@ -58,10 +63,18 @@ footer{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;color:
  function setMotion(on){document.body.className=on?"":"motionoff";motion.textContent=on?"MOTION: LOW":"MOTION: OFF";motion.setAttribute("aria-pressed",on?"true":"false")}
  setMotion(!reduce);motion.onclick=function(){setMotion(document.body.className==="motionoff")};
  document.addEventListener("visibilitychange",function(){if(document.hidden){document.body.classList.add("motionoff")}else if(motion.getAttribute("aria-pressed")==="true"){document.body.classList.remove("motionoff")}});
- var buttons=document.querySelectorAll("a.action"),i=0;
+
+ var entries=[],log=document.getElementById("log"),toggle=document.getElementById("togglelog");
+ function note(msg){var time=new Date();entries.push(time.toLocaleTimeString()+"  "+msg);if(entries.length>12)entries.shift();log.textContent=entries.join("\\n")}
+ note("Launcher loaded");note(m?"Detected PS"+m[1]+" / "+m[2]:"No PlayStation user agent detected");note("Upstream exploit remains idle");
+ toggle.onclick=function(){log.hidden=!log.hidden;toggle.textContent=log.hidden?"SHOW LOG":"HIDE LOG";toggle.setAttribute("aria-expanded",log.hidden?"false":"true")};
+ var launch=document.getElementById("launch");
+ launch.addEventListener("click",function(){document.getElementById("engineState").textContent="HANDOFF";setMotion(false);note("Navigating to upstream exploit page (outcome unknown)")});
+ var buttons=[document.getElementById("launch"),document.querySelector("a.action.secondary"),motion,toggle],i=0;
+
  document.addEventListener("keydown",function(e){
   var k=e.keyCode;
-  if(k===37||k===38||k===39||k===40){e.preventDefault();i=(i+(k===37||k===38?-1:1)+buttons.length)%buttons.length;buttons[i].focus()}
+  if(k===37||k===38||k===39||k===40){e.preventDefault();var active=buttons.indexOf(document.activeElement);if(active>=0)i=active;i=(i+(k===37||k===38?-1:1)+buttons.length)%buttons.length;buttons[i].focus()}
  });
 })();
 </script></body></html>
