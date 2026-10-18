@@ -19,6 +19,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/configure-pages@v5
+      - name: Build PSFree-Lapse kernel patch binaries
+        shell: bash
+        run: |
+          make -C src/kpatch
+          test -s src/kpatch/900.bin
+          for version in 700 750 800 850 900 903 950; do
+            test -s "src/kpatch/${version}.bin"
+          done
       - name: Prepare static site
         shell: bash
         run: |
@@ -27,6 +35,9 @@ jobs:
           mv _site/index.html _site/exploit.html
           cp _site/launcher.html _site/index.html
           sed -i 's@href="./index.html"@href="./exploit.html"@g' _site/index.html _site/launcher.html
+          test -s _site/kpatch/900.bin
+          test -f _site/psfree.mjs
+          test -f _site/lapse.mjs
           touch _site/.nojekyll
       - uses: actions/upload-pages-artifact@v3
         with:
