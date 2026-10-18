@@ -38,3 +38,19 @@ Open `http://127.0.0.1:8088/launcher.html` in your PC browser.
 ## Licensing and credit
 
 The upstream project is [Al-Azif/psfree-lapse](https://github.com/Al-Azif/psfree-lapse), licensed AGPL-3.0-or-later. Preserve upstream authorship and license notices. This new UI is contributed as part of the same fork under the repository's AGPL terms.
+
+## Build 002 — bounded dot-matrix motif
+
+- Added twelve small CSS-animated dots *only within* the central orbital area.
+- No external DotMatrix dependency is installed. This is a dot-matrix-inspired effect for compatibility, not an integration of a particular third-party library.
+- Motion control toggles between LOW and OFF.
+- Animations pause when the page is hidden; the user's reduced-motion setting also disables the animated effect by default.
+- The original exploit entrypoint (`src/index.html`) is unchanged.
+
+### PS4 checks before considering the build complete
+
+- Open `launcher.html` through the LAN-hosted site; ensure the browser can render the page without crashes.
+- Toggle motion OFF before starting the exploit and compare reliability.
+- Confirm labels and button focus work with the PS4 controller.
+- Verify the motion control stays reachable and that frame rate is acceptable.
+- No claims of tested PS4 performance or GoldHEN integration until tested on real hardware.
