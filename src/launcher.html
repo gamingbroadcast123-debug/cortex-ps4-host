@@ -65,7 +65,7 @@ footer{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;color:
  document.addEventListener("visibilitychange",function(){if(document.hidden){document.body.classList.add("motionoff")}else if(motion.getAttribute("aria-pressed")==="true"){document.body.classList.remove("motionoff")}});
 
  var entries=[],log=document.getElementById("log"),toggle=document.getElementById("togglelog");
- function note(msg){var time=new Date();entries.push(time.toLocaleTimeString()+"  "+msg);if(entries.length>12)entries.shift();log.textContent=entries.join("\\n")}
+ function note(msg){var time=new Date();entries.push(time.toLocaleTimeString()+"  "+msg);if(entries.length>12)entries.shift();log.textContent=entries.join("\n")}
  note("Launcher loaded");note(m?"Detected PS"+m[1]+" / "+m[2]:"No PlayStation user agent detected");note("Upstream exploit remains idle");
  toggle.onclick=function(){log.hidden=!log.hidden;toggle.textContent=log.hidden?"SHOW LOG":"HIDE LOG";toggle.setAttribute("aria-expanded",log.hidden?"false":"true")};
  var launch=document.getElementById("launch");
