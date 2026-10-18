@@ -1,0 +1,45 @@
+<!-- CORTEX HOST launcher UI. Original PSFree entrypoint remains unchanged in index.html. -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>CORTEX HOST // PS4</title>
+<style>
+*{box-sizing:border-box}html,body{min-height:100%;margin:0}body{background:#08090d;color:#eee6e4;font:15px Arial,sans-serif;overflow-x:hidden}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;background:radial-gradient(ellipse at 52% 35%,rgba(135,23,33,.21),transparent 50%),repeating-linear-gradient(0deg,transparent 0,transparent 3px,rgba(255,255,255,.012) 4px)}
+body:after{content:"";position:fixed;inset:0;pointer-events:none;border:12px solid rgba(0,0,0,.16);z-index:10}
+a{color:inherit;text-decoration:none}.shell{position:relative;z-index:1;max-width:1350px;min-height:100vh;margin:auto;padding:25px 32px 28px}
+.top{display:flex;justify-content:space-between;align-items:center;padding-bottom:20px;border-bottom:1px solid #39272e}.brand{display:flex;align-items:center;gap:13px}.sigil{width:37px;height:37px;border:2px solid #dd4555;transform:rotate(45deg);box-shadow:0 0 24px #8e1f3488;position:relative}.sigil:after{content:"";position:absolute;inset:7px;border:1px solid #f8b0ab}.brand strong{display:block;letter-spacing:4px;font-size:19px}.brand small,.micro{font:11px monospace;letter-spacing:2px;color:#a7999b}.topright{font:12px monospace;color:#bda5a8}.lamp{display:inline-block;width:8px;height:8px;background:#dc5960;border-radius:50%;box-shadow:0 0 13px #dd4555;margin-right:9px;animation:blink 2s infinite}
+.hero{display:flex;gap:42px;align-items:center;justify-content:space-between;min-height:350px;padding:38px 16px 20px}.intro{max-width:570px}.kicker{font:12px monospace;letter-spacing:4px;color:#ec7780}.intro h1{font-size:clamp(44px,6.7vw,88px);margin:16px 0 7px;line-height:.95;letter-spacing:3px;font-weight:800}.intro h1 span{color:#ea5966}.intro p{line-height:1.7;color:#a99da0;max-width:455px}.divider{height:1px;background:linear-gradient(90deg,#a12a3c,transparent);margin:21px 0}.meta{font:12px monospace;letter-spacing:1px;color:#dfb3b4}
+.orbit{height:285px;width:285px;flex:none;position:relative;display:flex;align-items:center;justify-content:center;animation:float 7s ease-in-out infinite}.ring{position:absolute;border:1px solid rgba(218,65,81,.5);border-radius:50%;animation:spin 25s linear infinite}.r1{inset:10px;border-style:dashed}.r2{inset:42px;animation-direction:reverse;animation-duration:19s}.r3{inset:72px;box-shadow:0 0 35px #7f1b2d33}.core{height:95px;width:95px;background:radial-gradient(circle,#dc6470 0,#7a162c 38%,#160d16 72%);border:1px solid #e25f70;border-radius:50%;box-shadow:0 0 38px #a72744,0 0 80px #7d172655;animation:breathe 3.4s ease-in-out infinite}.orb{position:absolute;width:7px;height:7px;background:#f48a91;border-radius:50%;box-shadow:0 0 15px #ff526d}.o1{top:11px;left:140px}.o2{bottom:41px;right:38px}.o3{left:36px;top:91px}
+.panelgrid{display:grid;grid-template-columns:1.45fr 1fr 1fr;gap:13px}.panel{border:1px solid #392932;background:linear-gradient(145deg,rgba(31,24,31,.93),rgba(12,13,19,.95));padding:23px;min-height:208px;position:relative;overflow:hidden}.panel:before{content:"";height:2px;position:absolute;top:0;left:0;right:0;background:linear-gradient(90deg,#cc3346,transparent)}.panel h2{margin:13px 0 9px;font-size:20px;letter-spacing:1px}.panel p{color:#aa9b9e;font-size:13px;line-height:1.6;min-height:44px}.panel .micro{color:#db6470}.action{display:inline-block;cursor:pointer;padding:13px 17px;margin-top:9px;background:#a52d3e;border:1px solid #e26a78;color:white;font:700 12px monospace;letter-spacing:2px;transition:background .15s,box-shadow .15s}.action:hover,.action:focus{background:#cc3d53;box-shadow:0 0 20px #b82d4666;outline:2px solid #ffc6cc;outline-offset:2px}.secondary{background:#201820;border-color:#68414d}.secondary:hover,.secondary:focus{background:#57303b}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:#3e2b34;border:1px solid #3e2b34;margin-top:14px}.stat{background:#15131a;padding:17px 19px}.stat label{display:block;color:#9d8990;font:11px monospace;letter-spacing:1px}.stat b{display:block;margin-top:9px;color:#e1c3c5;font:16px monospace}
+footer{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;color:#897c82;font:11px monospace;line-height:1.6;padding:22px 0}footer a{text-decoration:underline}
+@keyframes spin{to{transform:rotate(360deg)}}@keyframes breathe{50%{transform:scale(1.13);filter:brightness(1.4)}}@keyframes blink{50%{opacity:.3}}@keyframes float{50%{transform:translateY(-9px)}}
+@media(max-width:850px){.panelgrid{grid-template-columns:1fr 1fr}.panel:first-child{grid-column:span 2}.hero{min-height:290px}.orbit{width:180px;height:180px}.r1{inset:4px}.r2{inset:25px}.r3{inset:49px}.core{width:65px;height:65px}.o1{left:90px}.o2{right:14px}.o3{left:16px}}
+@media(max-width:570px){.shell{padding:20px 15px}.topright{display:none}.hero{padding:28px 0;gap:0}.orbit{display:none}.panelgrid{display:block}.panel{margin-bottom:12px;min-height:0}.stats{grid-template-columns:1fr 1fr}.brand strong{font-size:15px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
+</style></head>
+<body><main class="shell">
+<header class="top"><div class="brand"><div class="sigil" aria-hidden="true"></div><div><strong>CORTEX HOST</strong><small>PLAYSTATION / EXPLOIT ENVIRONMENT</small></div></div><div class="topright"><span class="lamp"></span>LOCAL INTERFACE <span style="color:#685860">/</span> BUILD 001</div></header>
+<section class="hero"><div class="intro"><div class="kicker">THE SYSTEM AWAITS YOUR COMMAND</div><h1>AWAKEN<br><span>THE CORE.</span></h1><p>A standalone PlayStation browser host. A dark console interface inspired by CORTEX OS, with upstream PSFree-Lapse preserved intact.</p><div class="divider"></div><div class="meta">TARGET / PS4 9.00 &nbsp; • &nbsp; ENGINE / PSFREE + LAPSE</div></div><div class="orbit" aria-hidden="true"><div class="ring r1"></div><div class="ring r2"></div><div class="ring r3"></div><div class="core"></div><span class="orb o1"></span><span class="orb o2"></span><span class="orb o3"></span></div></section>
+<section class="panelgrid" aria-label="Launcher controls">
+<article class="panel"><div class="micro">01 // EXPLOIT ENGINE</div><h2>INITIALIZE SYSTEM</h2><p>Open the original PSFree-Lapse exploit entrypoint. Execution begins on that page; this interface does not claim success in advance.</p><a class="action" href="./index.html" id="launch">ENTER EXPLOIT →</a></article>
+<article class="panel"><div class="micro">02 // GOLDHEN</div><h2>PAYLOAD STATUS</h2><p>GoldHEN payload delivery is not integrated in Build 001. A compatible payload must be supplied separately.</p><span class="micro">NOT CONFIGURED</span></article>
+<article class="panel"><div class="micro">03 // ARCHIVES</div><h2>SYSTEM NOTES</h2><p>Inspect project documentation, upstream licenses, and compatibility guidance before running the exploit.</p><a class="action secondary" href="./about.html">OPEN CREDITS →</a></article>
+</section>
+<section class="stats" aria-label="Status readings"><div class="stat"><label>CONSOLE</label><b id="consoleType">DETECTING</b></div><div class="stat"><label>FIRMWARE</label><b id="firmware">DETECTING</b></div><div class="stat"><label>HOST MODE</label><b>LOCAL WEB</b></div><div class="stat"><label>ENGINE STATE</label><b>NOT STARTED</b></div></section>
+<footer><span>© CORTEX HOST UI // DERIVED FROM PSFREE-LAPSE (AGPL-3.0-OR-LATER)</span><span>ARROWS / NAVIGATE &nbsp; • &nbsp; ENTER / SELECT &nbsp; • &nbsp; <a href="https://github.com/Al-Azif/psfree-lapse">UPSTREAM SOURCE</a></span></footer>
+</main>
+<script>
+(function(){
+ var ua=navigator.userAgent||"",m=ua.match(/PlayStation (4|5)[ \/]([0-9]{1,2}\.[0-9]{2})/);
+ document.getElementById("consoleType").textContent=m?"PS"+m[1]:"UNKNOWN / PC";
+ document.getElementById("firmware").textContent=m?m[2]:"NOT DETECTED";
+ var buttons=document.querySelectorAll("a.action"),i=0;
+ document.addEventListener("keydown",function(e){
+  var k=e.keyCode;
+  if(k===37||k===38||k===39||k===40){e.preventDefault();i=(i+(k===37||k===38?-1:1)+buttons.length)%buttons.length;buttons[i].focus()}
+ });
+})();
+</script></body></html>
